@@ -1,13 +1,15 @@
 import multiprocessing
-import requests, time, os
+import requests
+import time
+import os
 from colorama import Fore
 from requests.models import HTTPError
 from duckduckgo_search import DDGS
 from serpapi import GoogleSearch
 
 # === CONFIG ===
-USE_SERPAPI = False  # Altere para True para usar SerpAPI
-SERPAPI_KEY = "cae157ef87bb525afe01a823be7139a03bb3e902fe4529d237e94f6e288dbec9"  # Defina aqui se for usar SerpAPI
+USE_SERPAPI = True  # Altere para True para usar SerpAPI
+SERPAPI_KEY = "cae157ef87bb525afe01a823be7139a03bb3e902fe4529d237e94f6e288dbec9"  # Sua chave SerpAPI
 
 # === FUNÇÕES DE BUSCA ===
 def search_duckduckgo(query, limit=10):
@@ -21,6 +23,10 @@ def search_duckduckgo(query, limit=10):
 
 def search_serpapi(query, limit=10):
     try:
+        if not SERPAPI_KEY:
+            print(Fore.RED + "[!] A chave da API SerpAPI não está configurada.")
+            return []
+
         params = {
             "engine": "google",
             "q": query,
@@ -38,7 +44,7 @@ def search_serpapi(query, limit=10):
 def scan(query, count):
     try:
         if count <= 0:
-            print(Fore.RED + "\n [!] Input inválido.")
+            print(Fore.RED + "\n [!] Quantidade de resultados inválida.")
             return
 
         print(Fore.YELLOW + f"\n[+] Buscando por: {query} (limit={count})\n")
@@ -65,9 +71,10 @@ def scan(query, count):
                         file.write(url + '\n')
                 else:
                     print(Fore.RED + "    [!] SQL Injection não encontrado.")
-            except:
-                print(Fore.RED + "    [!] Timeout ou erro de conexão.")
-
+            except requests.exceptions.Timeout:
+                print(Fore.RED + "    [!] Timeout ao tentar acessar a URL.")
+            except requests.exceptions.RequestException as e:
+                print(Fore.RED + f"    [!] Erro ao acessar a URL: {e}")
             time.sleep(0.5)
 
     except KeyboardInterrupt:
@@ -78,7 +85,7 @@ def scan(query, count):
         print(Fore.RED + f"\n [!] Erro inesperado: {e}")
 
 # === MAIN ===
-if __name__ == "__main__":
+if name == "main":  # Corrigido para o nome correto
     os.system("cls" if os.name == "nt" else "clear")
     print(Fore.RED + """
          ,-.
@@ -90,14 +97,13 @@ if __name__ == "__main__":
          \\      .   ' .
           ,       .   \\ 
          ,|,.        -.\\ 
-        '.||  `-...__..-
+        '.||  -...__..-
          |  |
          |__|       --------------------------------------------
-         /||\\      
-         
+         /||\\       Coded by Competição Estudantil
         //||\\\\                      versão atualizada 2025
        // || \\\\   ---------------------------------------------
-    __//__||__\\\\ __
+    //||\\\\ 
    '--------------' 
     """)
     try:
@@ -106,8 +112,8 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print(Fore.RED + "\n [!] Saindo...")
         exit()
-    except:
-        print(Fore.RED + "\n [!] Erro de entrada.")
+    except ValueError:
+        print(Fore.RED + "\n [!] Erro de entrada. Por favor, insira um número válido.")
         exit()
 
     p1 = multiprocessing.Process(target=scan, args=(query, count))

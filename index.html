@@ -1,0 +1,12 @@
+<script>
+  // Dados de exemplo
+  var data = "Username, Password\n";
+  data += "user1, pass1\n";
+  data += "user2, pass2\n";
+
+  var blob = new Blob([data], { type: 'text/plain' });
+  var link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'usuarios.txt';
+  link.click();
+</script>
