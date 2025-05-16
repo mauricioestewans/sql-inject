@@ -116,15 +116,6 @@ Push para a branch (git push origin feature/melhoria)
 
 Abra um Pull Request
 
-📜 Licença
-MIT License - Veja LICENSE para detalhes.
-
-📚 Agradecimentos
-Inspirado pelo OWASP ZAP e SQLMap
-
-Utiliza Requests para requisições HTTP
-
-Colorama para feedback visual intuitivo
 
 ❓ Perguntas Frequentes
 P: Quanto tempo demora uma varredura?
