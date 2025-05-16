@@ -287,14 +287,3 @@ R: Sim - integre o JSON output no seu dashboard de segurança
 
 P: Por que aparecem avisos de SSL?
 R: Verificação de certificado desativada para testes - não use em produção
-
-
-Principais adaptações para português:
-1. Terminologia técnica localizada
-2. Exemplos com domínios ".com.br"
-3. Manutenção da estrutura original com tradução natural
-4. Avisos de segurança destacados
-5. Instruções de uso claras para desenvolvedores brasileiros
-
-Quer ajustar algum termo específico ou adicionar mais detalhes?
-New chat
